@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--上面2行的是约束依赖，固定照抄就好-->
+<!--下面的才是要自己编写的地方-->
+<!--写mapper的配置文件第一步就是要写<mapper></mapper>标签-->
+<!--<mapper></mapper>标签里包含着各个CURD操作的SQL语句-->
+<mapper namespace="com.example.demo.UserMapper">
+    <!--定义一个名为BaseResultMap的返回类型-->
+    <resultMap id="ChinaDataResultMap" type="com.example.demo.ChinaData">
+        <id column="id" property="id" jdbcType="INTEGER"></id>
+        <result column="confirmedCount" property="confirmedCount" jdbcType="INTEGER"></result>
+        <result column="confirmedIncr" property="confirmedIncr" jdbcType="INTEGER"></result>
+        <result column="curedCount" property="curedCount" jdbcType="INTEGER"></result>
+        <result column="curedIncr" property="curedIncr" jdbcType="INTEGER"></result>
+        <result column="currentConfirmedCount" property="currentConfirmedCount" jdbcType="INTEGER"></result>
+        <result column="currentConfirmedIncr" property="currentConfirmedIncr" jdbcType="INTEGER"></result>
+        <result column="dateId" property="dateId" jdbcType="INTEGER"></result>
+        <result column="deadCount" property="deadCount" jdbcType="INTEGER"></result>
+        <result column="deadIncr" property="deadIncr" jdbcType="INTEGER"></result>
+        <result column="suspectedCount" property="suspectedCount" jdbcType="INTEGER"></result>
+        <result column="suspectedCountIncr" property="suspectedCountIncr" jdbcType="INTEGER"></result>
+        <result column="provinceName" property="provinceName" jdbcType="LONGVARCHAR"></result>
+        <result column="provinceShortName" property="provinceShortName" jdbcType="LONGVARCHAR"></result>
+    </resultMap>
+    
+    <resultMap id="WorldDataResultMap" type="com.example.demo.WorldData">
+        <id column="id" property="id" jdbcType="INTEGER"></id>
+        <result column="confirmedCount" property="confirmedCount" jdbcType="INTEGER"></result>
+        <result column="confirmedIncr" property="confirmedIncr" jdbcType="INTEGER"></result>
+        <result column="curedCount" property="curedCount" jdbcType="INTEGER"></result>
+        <result column="curedIncr" property="curedIncr" jdbcType="INTEGER"></result>
+        <result column="currentConfirmedCount" property="currentConfirmedCount" jdbcType="INTEGER"></result>
+        <result column="currentConfirmedIncr" property="currentConfirmedIncr" jdbcType="INTEGER"></result>
+        <result column="dateId" property="dateId" jdbcType="INTEGER"></result>
+        <result column="deadCount" property="deadCount" jdbcType="INTEGER"></result>
+        <result column="deadIncr" property="deadIncr" jdbcType="INTEGER"></result>
+        <result column="suspectedCount" property="suspectedCount" jdbcType="INTEGER"></result>
+        <result column="suspectedCountIncr" property="suspectedCountIncr" jdbcType="INTEGER"></result>
+        <result column="countryName" property="countryName" jdbcType="LONGVARCHAR"></result>
+        <result column="countryShortCode" property="countryShortCode" jdbcType="LONGVARCHAR"></result>
+        <result column="continent" property="continent" jdbcType="LONGVARCHAR"></result>
+        <result column="countryFullName" property="countryFullName" jdbcType="LONGVARCHAR"></result>
+    </resultMap>
+    
+    <resultMap id="WorldTotalDataResultMap" type="com.example.demo.WorldTotalData">
+        <id column="id" property="id" jdbcType="INTEGER"></id>
+        <result column="confirmedCount" property="confirmedCount" jdbcType="INTEGER"></result>
+        <result column="confirmedIncr" property="confirmedIncr" jdbcType="INTEGER"></result>
+        <result column="curedCount" property="curedCount" jdbcType="INTEGER"></result>
+        <result column="curedIncr" property="curedIncr" jdbcType="INTEGER"></result>
+        <result column="currentConfirmedCount" property="currentConfirmedCount" jdbcType="INTEGER"></result>
+        <result column="currentConfirmedIncr" property="currentConfirmedIncr" jdbcType="INTEGER"></result>
+        <result column="dateId" property="dateId" jdbcType="INTEGER"></result>
+        <result column="deadCount" property="deadCount" jdbcType="INTEGER"></result>
+        <result column="deadIncr" property="deadIncr" jdbcType="INTEGER"></result>
+        <result column="suspectedCount" property="suspectedCount" jdbcType="INTEGER"></result>
+        <result column="suspectedCountIncr" property="suspectedCountIncr" jdbcType="INTEGER"></result>
+    </resultMap>
+    
+    <resultMap id="TripDataResultMap" type="com.example.demo.TripData">
+    	<id column="id" property="id" jdbcType="INTEGER"></id>
+    	<result column="t_date" property="t_date" jdbcType="LONGVARCHAR"></result>
+    	<result column="t_start" property="t_start" jdbcType="LONGVARCHAR"></result>
+    	<result column="t_end" property="t_end" jdbcType="LONGVARCHAR"></result>
+    	<result column="t_type" property="t_type" jdbcType="LONGVARCHAR"></result>
+    	<result column="t_no" property="t_no" jdbcType="LONGVARCHAR"></result>
+    	<result column="t_memo" property="t_memo" jdbcType="LONGVARCHAR"></result>
+    	<result column="t_no_sub" property="t_no_sub" jdbcType="LONGVARCHAR"></result>
+    	<result column="t_pos_start" property="t_pos_start" jdbcType="LONGVARCHAR"></result>
+    	<result column="t_pos_end" property="t_pos_end" jdbcType="LONGVARCHAR"></result>
+    	<result column="source" property="source" jdbcType="LONGVARCHAR"></result>
+    	<result column="who" property="who" jdbcType="LONGVARCHAR"></result>
+    </resultMap>
+  
+    <!--查找语句-->
+    <select id="selectAllChinaData" resultMap="ChinaDataResultMap">
+        select * from china_provincedata
+    </select>
+    
+    <select id="selectAllWorldData" resultMap="WorldDataResultMap">
+    	select * from countrydata
+    </select>
+    
+    <!-- 查找世界总体数据 -->
+    <select id="selectAllWorldTotalData" resultMap="WorldTotalDataResultMap">
+    	select * from world_total_data
+    </select>
+    
+    <select id="selectAllTripData" resultMap="TripDataResultMap">
+    	select * from trip_data
+    </select>
+    <!-- 获取所有处理后的同程数据 -->
+    <select id="selectAllDealedTripData" resultMap="TripDataResultMap">
+    	select * from trip_deal_data
+    </select>
+    
+    <select id="selectChinaDataFromWorld" resultMap="WorldDataResultMap">
+    	select * from countrydata where countryName="中国"
+    </select>
+    
+    <!-- 抽取中国疑似数据用于饼图 -->
+    <select id="selectIncrChinaData" resultMap="WorldDataResultMap">
+    	select * from countrydata where countryName="中国" and dateId=#{dateId,jdbcType=INTEGER}
+    </select>
+    
+    <!-- 抽取世界新增数据用于饼图 -->
+    <select id="selectIncrWorldData" resultMap="WorldTotalDataResultMap">
+    	select * from world_total_data where dateId=#{dateId,jdbcType=INTEGER}
+    </select>
+    
+    <select id="selectConsDateChinaData" resultMap="ChinaDataResultMap" parameterType="java.lang.Integer">
+    	select * from china_provincedata where dateId=#{dateId,jdbcType=INTEGER}
+    </select>
+    
+    <select id="selectProvinceData" resultMap="ChinaDataResultMap">
+    	select * from china_provincedata where provinceShortName=#{provinceShortName,jdbcType=LONGVARCHAR}
+    </select>
+    
+    <!-- 获取各国家数据 -->
+    <select id="selectCountryData" resultMap="WorldDataResultMap">
+    	select * from countrydata where countryFullName=#{countryFullName,jdbcType=LONGVARCHAR}
+    </select>
+    
+    <select id="selectConsDateWorldData" resultMap="WorldDataResultMap" parameterType="java.lang.Integer">
+    	select * from countrydata where dateId=#{dateId,jdbcType=INTEGER}
+    </select>
+    
+    <!-- 获取出度数据 -->
+    <select id="selectTheOutNumOfProvince" resultType="int">
+    	select count(distinct(t_pos_end)) from trip_deal_data where t_pos_start=#{t_pos_start,jdbcType=LONGVARCHAR}
+    </select>
+    <select id="selectAllConfirmedOutNum" resultType="int">
+    	select count(*)from trip_deal_data where t_pos_start=#{t_pos_start,jdbcType=LONGVARCHAR}
+    </select>
+</mapper>
